@@ -1,10 +1,8 @@
 pipeline {
     agent { label 'my-terraform-agent' }
-
-    stages {
-        stage('Checkout Code') {
+        stage('Clone repository') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github', url: 'https://github.com/BhairaviSanskriti/Test-Jenkins.git']]])
+                git url: 'https://github.com/<username>/<repo>.git'
             }
         }
         
