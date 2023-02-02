@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Clone repository') {
             steps {
-                git url: 'https://github.com/BhairaviSanskriti/Test-Jenkins.git'
+                git credentialsID: 'github', url: 'https://github.com/BhairaviSanskriti/Test-Jenkins.git'
             }
         }
       
