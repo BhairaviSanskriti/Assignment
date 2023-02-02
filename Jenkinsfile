@@ -1,28 +1,41 @@
 pipeline {
-    agent any
+    agent { label 'my-terraform-agent' }
 
     stages {
-        stage('Clone repository') {
+        stage('Checkout Code') {
             steps {
-                git credentialsID: 'github', url: 'https://github.com/BhairaviSanskriti/Test-Jenkins.git'
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github', url: 'https://github.com/BhairaviSanskriti/Test-Jenkins.git']]])
             }
         }
-      
+        
         stage('Validate Terraform') {
             steps {
-                sh 'terraform init'
+                sh 'terraform validate'
                 
             }
         }
-        stage('Run Terraform') {
+        
+        stage('Terraform Init') {
             steps {
                 sh 'terraform init'
-                
             }
         }
-        stage('Apply Terraform'){
+
+        stage('Terraform Plan') {
             steps {
-              sh 'terraform apply -auto-approve'
+                sh 'terraform plan -out=tfplan'
+            }
+        }
+
+        stage('Terraform Apply') {
+            steps {
+                script {
+                    if (env.BRANCH_NAME == 'main') {
+                        sh 'terraform apply -auto-approve tfplan'
+                    } else {
+                        echo 'Not applying changes, as this is not the master branch.'
+                    }
+                }
             }
         }
     }
