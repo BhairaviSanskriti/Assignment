@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+    environment{
+        THE_BUTLER_SAYS_SO=credentials('aws')
+    }
     stages{
         stage('Clone repository') {
             steps {
