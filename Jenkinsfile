@@ -2,7 +2,7 @@ pipeline {
     agent { label 'my-terraform-agent' }
         stage('Clone repository') {
             steps {
-                git url: 'https://github.com/<username>/<repo>.git'
+                git url: 'https://github.com/BhairaviSanskriti/Test-Jenkins.git'
             }
         }
         
