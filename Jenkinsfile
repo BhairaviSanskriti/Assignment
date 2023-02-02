@@ -8,6 +8,14 @@ pipeline {
             }
         }
         
+        
+        
+        stage('Terraform Init') {
+            steps {
+                sh 'terraform init'
+            }
+        }
+        
         stage('Validate Terraform') {
             steps {
                 sh 'terraform validate'
@@ -15,12 +23,6 @@ pipeline {
             }
         }
         
-        stage('Terraform Init') {
-            steps {
-                sh 'terraform init'
-            }
-        }
-
         stage('Terraform Plan') {
             steps {
                 sh 'terraform plan -out=tfplan'
