@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'my-terraform-agent' }
+    agent any
 
     stages{
         stage('Clone repository') {
