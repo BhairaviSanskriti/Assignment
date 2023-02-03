@@ -12,6 +12,6 @@ CONTEXT_NAME=`kubectl config view -o jsonpath='{.current-context}'`
 
 echo "$CONTEXT_NAME: this context is to be added"
 
-argocd cluster add $(terraform output -raw cluster_name) --server $(kubectl config view -o jsonpath='{.clusters[0].cluster.server}') --context $CONTEXT_NAME --insecure
+argocd cluster add $(terraform output -raw cluster_name) --server $(kubectl config view -o jsonpath='{.clusters[0].cluster.server}')
 
 echo "context is added"
