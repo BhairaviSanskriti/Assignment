@@ -1,12 +1,8 @@
 #!/bin/bash
 
 
-kubectl create namespace ecsdemo-nodejs
+kubectl create namespace nginx-ns
 
-argocd app create ecsdemo-nodejs --repo https://github.com/BhairaviSanskriti/ecsdemo-nodejs.git --path kubernetes --dest-server https://kubernetes.default.svc --dest-namespace ecsdemo-nodejs
+argocd app create nginx-app --repo https://github.com/BhairaviSanskriti/ecsdemo-nodejs.git --path deployments/nginx --dest-server https://kubernetes.default.svc --dest-namespace nginx-ns
 
-argocd app sync ecsdemo-nodejs
-
-# argocd app sync nginx-application
-
-kubectl get svc argocd-server -n argocd -o json | jq --raw-output '.status.loadBalancer.ingress[0].hostname'
+argocd app sync nginx-app
