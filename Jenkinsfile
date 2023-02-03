@@ -43,8 +43,13 @@ pipeline {
                 }
             }
         }
+         stage('Terraform Destroy') {
+            steps {
+                sh 'terraform destroy -auto-approve tfplan'    
+            }
+        }
         
-        stage('Update Kube Config') {
+       /* stage('Update Kube Config') {
             steps {
                 sh 'aws eks update-kubeconfig --region $(terraform output -raw region) --name $(terraform output -raw cluster_name)'
             }
@@ -81,7 +86,7 @@ pipeline {
                 sh "sudo chmod +x deploy_nginx.sh"
                 sh "./deploy_nginx.sh"
             }
-        }
+        }*/
     }
         
 }
