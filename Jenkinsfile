@@ -71,12 +71,14 @@ pipeline {
 
         stage('ArgoCD Login') {
             steps {
+                sh "sudo chmod +x login.sh"
                 sh "./login.sh"
             }
         }
 
         stage('Deploy Nginx Application') {
             steps {
+                sh "sudo chmod +x deploy_nginx.sh"
                 sh "./deploy_nginx.sh"
             }
         }
