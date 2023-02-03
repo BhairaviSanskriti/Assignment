@@ -7,7 +7,7 @@ pipeline {
     stages{
         stage('Clone repository') {
             steps {
-                git branch: env.BRANCH_NAME, changelog: false, credentialsId: 'github', poll: false, url: 'https://github.com/BhairaviSanskriti/Test-Jenkins.git'
+                git branch: env.BRANCH_NAME, changelog: false, credentialsId: 'github', poll: false, url: 'https://github.com/BhairaviSanskriti/Assignment.git'
             }
         }
         
