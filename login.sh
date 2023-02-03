@@ -6,6 +6,12 @@ export ARGO_PWD=`kubectl -n argocd get secret argocd-initial-admin-secret -o jso
 
 argocd login $ARGOCD_SERVER --username admin --password $ARGO_PWD --insecure
 
+echo 'Logged in to the server'
+
 CONTEXT_NAME=`kubectl config view -o jsonpath='{.current-context}'`
 
+echo "$CONTEXT_NAME: this context is to be added"
+
 argocd cluster add $CONTEXT_NAME
+
+echo "context is added"
