@@ -54,8 +54,8 @@ pipeline {
             steps {
                 sh 'kubectl create namespace argocd'
                 sh 'kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.4.7/manifests/install.yaml'
-                sh 'sudo curl --silent --location -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v2.4.7/argocd-linux-amd64'
-                sh 'sudo chmod +x /usr/local/bin/argocd'
+                sh 'sudo -S curl --silent --location -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v2.4.7/argocd-linux-amd64'
+                sh 'sudo -S chmod +x /usr/local/bin/argocd'
 
                 sh 'kubectl patch svc argocd-server -n argocd -p \'{"spec": {"type": "LoadBalancer"}}\''
                 sh 'export ARGOCD_SERVER=`kubectl get svc argocd-server -n argocd -o json | jq --raw-output \'.status.loadBalancer.ingress[0].hostname\'`'
