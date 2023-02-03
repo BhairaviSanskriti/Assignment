@@ -60,6 +60,7 @@ pipeline {
                 }
             }
         }
+        
         stage('Install ArgoCD') {
             steps {
                 sh 'sudo -S curl --silent --location -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v2.4.7/argocd-linux-amd64'
@@ -67,16 +68,19 @@ pipeline {
                 sh 'kubectl patch svc argocd-server -n argocd -p \'{"spec": {"type": "LoadBalancer"}}\''
             }
         }
+
         stage('ArgoCD Login') {
             steps {
                 sh "./login.sh"
             }
         }
-    }
+
         stage('Deploy Nginx Application') {
             steps {
                 sh "./deploy_nginx.sh"
             }
         }
     }
+        
 }
+
