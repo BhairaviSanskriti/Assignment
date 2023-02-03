@@ -6,4 +6,4 @@ argocd app create nginx-application --repo https://github.com/BhairaviSanskriti/
 
 argocd app sync nginx-application
 
-kubectl get svc argocd-server -n argocd -o json | jq --raw-output '.status.loadBalancer.ingress[0].hostname
+kubectl get svc argocd-server -n argocd -o json | jq --raw-output '.status.loadBalancer.ingress[0].hostname'
