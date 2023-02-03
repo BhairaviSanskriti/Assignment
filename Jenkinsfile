@@ -66,12 +66,12 @@ pipeline {
                 sh 'sudo -S chmod +x /usr/local/bin/argocd'
 
                 sh 'kubectl patch svc argocd-server -n argocd -p \'{"spec": {"type": "LoadBalancer"}}\''
-                sh "export ARGOCD_SERVER=`kubectl get svc argocd-server -n argocd -o json | jq --raw-output '.status.loadBalancer.ingress[0].hostname'`"
-                sh "cat Argocd Server url: $ARGOCD_SERVER"
-                sh 'export ARGO_PWD=`kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d`'
-                sh "argocd login $ARGOCD_SERVER --username admin --password $ARGO_PWD --insecure"
-                sh 'CONTEXT_NAME="kubectl config view -o jsonpath=\'{.current-context}\'"'
-                sh 'argocd cluster add $CONTEXT_NAME'
+                # sh "export ARGOCD_SERVER=`kubectl get svc argocd-server -n argocd -o json | jq --raw-output '.status.loadBalancer.ingress[0].hostname'`"
+                # sh "cat Argocd Server url: $ARGOCD_SERVER"
+                # sh 'export ARGO_PWD=`kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d`'
+                sh "argocd login $(kubectl get svc argocd-server -n argocd -o json | jq --raw-output '.status.loadBalancer.ingress[0].hostname') --username admin --password $ARGO(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d) --insecure"
+                # sh 'CONTEXT_NAME="kubectl config view -o jsonpath=\'{.current-context}\'"'
+                sh "argocd cluster add $(kubectl config view -o jsonpath='{.current-context}')"
             }
         }
         stage('Install Nginx Application') {
@@ -79,7 +79,7 @@ pipeline {
                 sh 'kubectl create namespace nginx-app'
                 sh 'argocd app create nginx-application --repo https://github.com/BhairaviSanskriti/Test-Jenkins.git --path ./deployments/nginx --dest-server https://kubernetes.default.svc --dest-namespace nginx-app'
                 sh 'argocd app sync nginx-application'
-                sh 'echo $ARGOCD_SERVER'
+                sh "echo $(kubectl get svc argocd-server -n argocd -o json | jq --raw-output '.status.loadBalancer.ingress[0].hostname')"
             }
         }
     }
