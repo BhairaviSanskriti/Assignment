@@ -1,12 +1,13 @@
 pipeline {
     agent any
     environment{
+        BRANCH_NAME='main'
         THE_BUTLER_SAYS_SO=credentials('aws')
     }
     stages{
         stage('Clone repository') {
             steps {
-                git branch: 'main', changelog: false, credentialsId: 'github', poll: false, url: 'https://github.com/BhairaviSanskriti/Test-Jenkins.git'
+                git branch: env.BRANCH_NAME, changelog: false, credentialsId: 'github', poll: false, url: 'https://github.com/BhairaviSanskriti/Test-Jenkins.git'
             }
         }
         
