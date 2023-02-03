@@ -43,13 +43,14 @@ pipeline {
                 }
             }
         }
+        /*
          stage('Terraform Destroy') {
             steps {
                 sh 'terraform destroy -auto-approve'    
             }
         }
         
-       /* stage('Update Kube Config') {
+       stage('Update Kube Config') {
             steps {
                 sh 'aws eks update-kubeconfig --region $(terraform output -raw region) --name $(terraform output -raw cluster_name)'
             }
