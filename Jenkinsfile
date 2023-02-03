@@ -46,7 +46,7 @@ pipeline {
         
         stage('Update Kube Config') {
             steps {
-                sh "aws eks update-kubeconfig --region $(terraform output -raw region) --name $(terraform output -raw cluster_name)"
+                sh 'aws eks update-kubeconfig --region $(terraform output -raw region) --name $(terraform output -raw cluster_name)'
             }
         }
         stage('Check Namespace') {
