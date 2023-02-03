@@ -49,11 +49,19 @@ pipeline {
                 sh 'aws eks --region $(terraform output -raw region) update-kubeconfig --name $(terraform output -raw cluster_name)'
             }
         }
-        
+        stage('Check Namespace') {
+            steps {
+                script {
+                    def namespaceExists = sh(returnStdout: true, script: 'kubectl get namespace argocd -o jsonpath={.metadata.name}') == 'argocd'
+                    if (!namespaceExists) {
+                        sh 'kubectl create namespace argocd'
+                        sh 'kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.4.7/manifests/install.yaml'
+                    }
+                }
+            }
+        }
         stage('Install ArgoCD') {
             steps {
-                sh 'kubectl create namespace argocd'
-                sh 'kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.4.7/manifests/install.yaml'
                 sh 'sudo -S curl --silent --location -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v2.4.7/argocd-linux-amd64'
                 sh 'sudo -S chmod +x /usr/local/bin/argocd'
 
