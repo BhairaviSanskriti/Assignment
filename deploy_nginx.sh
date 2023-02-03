@@ -1,8 +1,11 @@
 #!/bin/bash
 
-kubectl create namespace nginx-app
 
-argocd app create nginx-application --repo https://github.com/BhairaviSanskriti/Test-Jenkins.git --path deployments/nginx --dest-server https://kubernetes.default.svc --dest-namespace nginx-app
+kubectl create namespace ecsdemo-nodejs
+
+argocd app create ecsdemo-nodejs --repo https://github.com/BhairaviSanskriti/ecsdemo-nodejs.git --path kubernetes --dest-server https://kubernetes.default.svc --dest-namespace ecsdemo-nodejs
+
+argocd app sync ecsdemo-nodejs
 
 # argocd app sync nginx-application
 
