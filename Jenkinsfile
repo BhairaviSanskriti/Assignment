@@ -66,10 +66,10 @@ pipeline {
                 sh 'sudo -S chmod +x /usr/local/bin/argocd'
 
                 sh 'kubectl patch svc argocd-server -n argocd -p \'{"spec": {"type": "LoadBalancer"}}\''
-                sh 'export ARGOCD_SERVER=`kubectl get svc argocd-server -n argocd -o json | jq --raw-output \'.status.loadBalancer.ingress[0].hostname\'`'
+                sh "export ARGOCD_SERVER=`kubectl get svc argocd-server -n argocd -o json | jq --raw-output '.status.loadBalancer.ingress[0].hostname'`"
+                sh "cat Argocd Server url: $ARGOCD_SERVER"
                 sh 'export ARGO_PWD=`kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d`'
-                sh 'argocd login $ARGOCD_SERVER --username admin --password $ARGO_PWD --insecure'
-
+                sh "argocd login $ARGOCD_SERVER --username admin --password $ARGO_PWD --insecure"
                 sh 'CONTEXT_NAME="kubectl config view -o jsonpath=\'{.current-context}\'"'
                 sh 'argocd cluster add $CONTEXT_NAME'
             }
