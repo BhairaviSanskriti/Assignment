@@ -1,4 +1,4 @@
-# Assignment
+# Getting Started
 
 ## About
 In this project, I have created a Jenkins pipeline for continuous provisioning of infrastructure and also continuous deployment of the nginx application.
