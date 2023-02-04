@@ -44,11 +44,11 @@ pipeline {
             }
         }
         
-         stage('Terraform Destroy') {
+        /* stage('Terraform Destroy') {
             steps {
                 sh 'terraform destroy -auto-approve'    
             }
-        }
+        }*/
         
        stage('Update Kube Config') {
             steps {
