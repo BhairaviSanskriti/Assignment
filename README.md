@@ -38,7 +38,7 @@ Let's first understand the contents of various files and the directory of this r
   - `terraform` cli
 - Jenkins is also executing `sudo` commands. So, make sure to give sudo privileges to Jenkins.
 ### 2. Create a Jenkins pipeline
-- Create a Jenkins pipeline and use SCM to provide *Jenkisfile*.
+- Create a Jenkins pipeline and select SCM. Uses this repository's link as the url to provide *Jenkisfile*.
 - Click on 'Build Pipeline'.
 - It will take some time to provision the infra.
 - After the build completes you can check the ArgoCD server url to see the deployment status of the nginx application.
