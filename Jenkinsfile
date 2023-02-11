@@ -55,13 +55,14 @@ pipeline {
         }
         stage('Check Namespace') {
             steps {
-                /*Check whether argocd namespace is already created or not!*/
+                /*Check whether argocd namespace is already created or not!
                 sh'''
                     argocd_ns=$(kubectl get namespace argocd 2>/dev/null)
                     if [[ "$argocd_ns" != "argocd"* ]]; then
                       kubectl create namespace argocd
                     fi
-                '''
+                '''*/
+                sh 'kubectl create namespace argocd'
             }
         }
         
