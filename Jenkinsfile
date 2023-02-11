@@ -71,7 +71,7 @@ pipeline {
                 sh 'sudo -S curl --silent --location -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v2.4.7/argocd-linux-amd64'
                 sh 'sudo -S chmod +x /usr/local/bin/argocd'
                 sh 'kubectl patch svc argocd-server -n argocd -p \'{"spec": {"type": "LoadBalancer"}}\''
-                sh 'sleep 5'
+                sh 'sleep 140'
             }
         }
 
