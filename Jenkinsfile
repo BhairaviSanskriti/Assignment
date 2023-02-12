@@ -41,13 +41,13 @@ pipeline {
                 }
             }
         }
-        
+        /*
          stage('Terraform Destroy') {
             steps {
                 sh 'terraform destroy -auto-approve'    
             }
         }
-        /*
+        */
        stage('Update Kube Config') {
             steps {
                 sh 'aws eks update-kubeconfig --region $(terraform output -raw region) --name $(terraform output -raw cluster_name)'
@@ -56,12 +56,12 @@ pipeline {
         stage('Check Namespace') {
             steps {
                 Check whether argocd namespace is already created or not!
-                sh'''
+                /*sh'''
                     argocd_ns=$(kubectl get namespace argocd 2>/dev/null)
                     if [[ "$argocd_ns" != "argocd"* ]]; then
                       kubectl create namespace argocd
                     fi
-                '''
+                '''*/
                 sh 'kubectl create namespace argocd'
             }
         }
@@ -88,7 +88,7 @@ pipeline {
                 sh "sudo chmod +x deploy_nginx.sh"
                 sh "./deploy_nginx.sh"
             }
-        }*/
+        }
     }
         
 }
